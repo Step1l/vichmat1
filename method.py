@@ -86,7 +86,7 @@ def rec(mat:list, deg:int,c=0):
                 if 2 * abs(mat[i][k]) > sum([abs(j) for j in mat[i]]):
                     c=c+1
                 vh = mat[0:i] + mat[i + 1:n]
-                res,c = rec(vh,deg)
+                res,c = rec(vh,deg,c)
                 if res == False:continue
                 vih = [mat[i]]+res
                 break

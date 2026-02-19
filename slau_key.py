@@ -18,6 +18,9 @@ def slau_key(r):
                 break
             try:
                 str_i = [float(k) for k in str]
+                if str_i.count(0) == len(str_i):
+                    print("нельзя иметь строку со всеми 0")
+                    return
                 matr.append(str_i)
             except:
                 print("Incorrect input")
@@ -25,20 +28,27 @@ def slau_key(r):
 
         else:
             print("print right column of the augmented matrix")
-            try:
-                b = input().split()
-                b_i = [int(l) for l in b]
+            b=[]
+            b_i=[]
+            while True:
+                try:
+                    b = input().split()
+                    b_i = [int(l) for l in b]
+                    break
 
-            except:
-                print("Incorrect input")
-                return
+                except:
+                    print("Incorrect input")
+                    continue
 
             print("print Accuracy")
-            try:
-                acc = float(input().replace(',', '.'))
-            except:
-                print("Inccorect input")
-                return
+            acc=0
+            while True:
+                try:
+                    acc = float(input().replace(',', '.'))
+                    break
+                except:
+                    print("Inccorect input")
+                    continue
 
             result= method.gaus(matr, b_i, acc)
             if (result==False): return

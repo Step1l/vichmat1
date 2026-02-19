@@ -10,18 +10,16 @@ def generate_random_system(n, min_val=-10, max_val=10):
 def generate_diagonally_dominant_system(n, min_val=-10.0, max_val=10.0, dominance_factor=1.0):
     matrix = []
     for i in range(n):
-        # Генерируем недиагональные элементы
+
         row = [random.uniform(min_val, max_val) for _ in range(n)]
         sum_others = sum(abs(row[j]) for j in range(n) if j != i)
-        # Диагональный элемент делаем больше суммы остальных
+
         diag = sum_others + dominance_factor + random.uniform(0, 1)
-        # Случайный знак
         if random.choice([True, False]):
             diag = -diag
         row[i] = diag
         matrix.append(row)
 
-    # Генерируем вектор b (произвольные числа)
     b = [random.uniform(min_val, max_val) for _ in range(n)]
 
     return matrix, b
