@@ -34,6 +34,9 @@ def rand(r):
             if k<=0:
                 print("Агрумент не натуральное число")
                 return
+            if k>20:
+                print("Аргумент больше 20")
+                return
             matr,b = generate_random_system(k)
             try :
                 print("Введите точность")
@@ -62,6 +65,9 @@ def rrand(r):
             k = int(r[1])
             if k<=0:
                 print("Агрумент не натуральное число")
+                return
+            if k>20:
+                print("Аргумент больше 20")
                 return
             matr,b = generate_diagonally_dominant_system(k)
             try :

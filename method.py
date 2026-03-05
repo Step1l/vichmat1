@@ -34,22 +34,21 @@ def gaus(n:list,p: list, eps:float,):
     l = len(n)
     x = b.copy()
     x_p = b.copy()
-    count_int=1
-    for i in range(l):
+    count_int=0
+    cond=False
 
-        x[i] = b[i] / matr[i][i] - sum([(matr[i][j] / matr[i][i]) * x[j] for j in range(i )]) - sum(
-            [(matr[i][j] / matr[i][i]) * x[j] for j in range(i+1,l)])
 
-    while (condit(x,x_p,eps)[0]==False):
+    while (cond==False):
         count_int += 1
         x_p = x.copy()
         for i in range(l):
             x[i] = b[i] / matr[i][i] - sum([(matr[i][j] / matr[i][i]) * x[j] for j in range(i)]) - sum(
                 [(matr[i][j] / matr[i][i]) * x[j] for j in range(i + 1, l)])
+        cond = condit_func(x,x_p,eps)[0]
 
-    return [x,max([sum(matr[i][j] for j in range(l)) for i in range(l)]),count_int, condit(x,x_p,eps)[1]]
+    return [x,max([sum(matr[i][j] for j in range(l)) for i in range(l)]),count_int, condit_func(x,x_p,eps)[1]]
 
-def condit(x:list,y:list,eps:float):
+def condit_func(x:list,y:list,eps:float):
     re = []
     for i in range (len(x)):
         if abs(x[i]-y[i])<=eps:
