@@ -12,7 +12,6 @@ def pull():
     while stroc!="exit":
         stroc = input("$")
         r = stroc.split()
-        n = len(r)
         if r[0]=="slau":
             slau_key.slau_key(r)
         elif r[0]=="file":

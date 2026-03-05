@@ -21,11 +21,13 @@
 #     return False
 
 def gaus(n:list,p: list, eps:float,):
-    matr = rec(n,len(n))
-    if (matr == False):
+    trans = diag_matrix(n,len(n))
+    if (trans[1] == False):
         print("Матрицу нельзя привести к диагональному преобладанию")
         return False
+    matr = trans[0]
     b=[]
+    if len(n)==1: matr = matr[0]
     for i in matr:
         b.append(p[n.index(i)])
 
@@ -38,16 +40,16 @@ def gaus(n:list,p: list, eps:float,):
         x[i] = b[i] / matr[i][i] - sum([(matr[i][j] / matr[i][i]) * x[j] for j in range(i )]) - sum(
             [(matr[i][j] / matr[i][i]) * x[j] for j in range(i+1,l)])
 
-    while (con(x,x_p,eps)==False):
+    while (condit(x,x_p,eps)[0]==False):
         count_int += 1
         x_p = x.copy()
         for i in range(l):
             x[i] = b[i] / matr[i][i] - sum([(matr[i][j] / matr[i][i]) * x[j] for j in range(i)]) - sum(
                 [(matr[i][j] / matr[i][i]) * x[j] for j in range(i + 1, l)])
 
-    return [x,max([sum(matr[i][j] for j in range(l)) for i in range(l)]),count_int, con(x,x_p,eps)[1]]
+    return [x,max([sum(matr[i][j] for j in range(l)) for i in range(l)]),count_int, condit(x,x_p,eps)[1]]
 
-def con(x:list,y:list,eps:float):
+def condit(x:list,y:list,eps:float):
     re = []
     for i in range (len(x)):
         if abs(x[i]-y[i])<=eps:
@@ -55,9 +57,9 @@ def con(x:list,y:list,eps:float):
             continue
         break
     else: return [True,re]
-    return False
+    return [False,re]
 
-def rec(mat:list, deg:int,c=0):
+def diag_matrix(mat:list, deg:int,c=0):
     n=len(mat)
     if n==1:
         if 2*abs(mat[0][-1]) >= sum([abs(j) for j in mat[0]]):
@@ -66,32 +68,31 @@ def rec(mat:list, deg:int,c=0):
             return [[mat[0]],c]
         else: return [False,c]
     if (n == deg):
-        vih = 0
+        ex = 0
         for i in range(n):
             if 2*abs(mat[i][0])>= sum([abs(j) for j in mat[i]]):
                 c=0
                 if 2 * abs(mat[i][0]) >sum([abs(j) for j in mat[i]]):c=1
-                vh = mat[0:i]+mat[i+1:n]
-                res,c = rec(vh,deg,c)
+                rem = mat[0:i]+mat[i+1:n]
+                res,c = diag_matrix(rem,deg,c)
                 if (res == False or c==0):continue
-                vih = [mat[i]]+res
+                ex = [mat[i]]+res
                 break
-        else: return False
-        return vih
+        else: return [[[]],False]
+        return [ex,True]
     else:
         k = deg-n
-        vih=0
         for i in range(n):
             if 2 * abs(mat[i][k]) >= sum([abs(j) for j in mat[i]]):
                 if 2 * abs(mat[i][k]) > sum([abs(j) for j in mat[i]]):
                     c=c+1
-                vh = mat[0:i] + mat[i + 1:n]
-                res,c = rec(vh,deg,c)
+                rem = mat[0:i] + mat[i + 1:n]
+                res,c = diag_matrix(rem,deg,c)
                 if res == False:continue
-                vih = [mat[i]]+res
+                ex = [mat[i]]+res
                 break
         else: return [False,c]
-        return [vih,c]
+        return [ex,c]
 
 
 

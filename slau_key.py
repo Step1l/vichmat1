@@ -49,7 +49,6 @@ def slau_key(r):
                 except:
                     print("Inccorect input")
                     continue
-
             result= method.gaus(matr, b_i, acc)
             if (result==False): return
             print("Ответ: " ,end ="")
